@@ -28,24 +28,21 @@ import 'whatwg-fetch'
 import React, { Suspense, lazy } from 'react'
 import { render } from 'react-dom'
 import { BrowserRouter, Route, Link, Redirect, Switch } from 'react-router-dom'
-import MainComponent from './main-component'
-import TopicComponent from './topic-component'
-import FunctionalComponent from './func-component'
+import MainComponent from '../components/main-component'
+import TopicComponent from '../components/topic-component'
+import FunctionalComponent from '../components/func-component'
 import { ApmRoute } from '../../../src'
-import createApmBase from '../'
+import createApmBase from '..'
 
 const apm = createApmBase({
   debug: true,
-  serverUrl: 'http://localhost:8200',
-  serviceName: 'apm-agent-rum-test-e2e-react',
+  serviceName: 'apm-agent-rum-general-e2e-react',
   serviceVersion: '0.0.1'
 })
-const ManualComponent = lazy(() => import('./manual-component'))
+
+const ManualComponent = lazy(() => import('../components/manual-component'))
 
 class App extends React.Component {
-  constructor(props) {
-    super(props)
-  }
   render() {
     return (
       <div>
@@ -109,7 +106,7 @@ const tr = apm.getCurrentTransaction()
 const span = tr.startSpan('Render', 'app')
 
 render(
-  <BrowserRouter basename="/test/e2e/react/">
+  <BrowserRouter basename="/test/e2e/with-router/">
     <App />
   </BrowserRouter>,
   document.getElementById('app'),
